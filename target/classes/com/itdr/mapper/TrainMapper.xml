@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itdr.mapper.TrainMapper" >
+  <resultMap id="BaseResultMap" type="com.itdr.pojo.Train" >
+    <id column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="start_station" property="startStation" jdbcType="VARCHAR" />
+    <result column="end_station" property="endStation" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="total_time" property="totalTime" jdbcType="VARCHAR" />
+    <result column="total_distance" property="totalDistance" jdbcType="INTEGER" />
+    <result column="t_type" property="tType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tid, start_station, end_station, start_time, end_time, total_time, total_distance, 
+    t_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from train
+    where tid = #{tid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from train
+    where tid = #{tid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itdr.pojo.Train" >
+    insert into train (tid, start_station, end_station, 
+      start_time, end_time, total_time, 
+      total_distance, t_type)
+    values (#{tid,jdbcType=VARCHAR}, #{startStation,jdbcType=VARCHAR}, #{endStation,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{totalTime,jdbcType=VARCHAR}, 
+      #{totalDistance,jdbcType=INTEGER}, #{tType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itdr.pojo.Train" >
+    insert into train
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="startStation != null" >
+        start_station,
+      </if>
+      <if test="endStation != null" >
+        end_station,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="totalTime != null" >
+        total_time,
+      </if>
+      <if test="totalDistance != null" >
+        total_distance,
+      </if>
+      <if test="tType != null" >
+        t_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="startStation != null" >
+        #{startStation,jdbcType=VARCHAR},
+      </if>
+      <if test="endStation != null" >
+        #{endStation,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null" >
+        #{totalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="totalDistance != null" >
+        #{totalDistance,jdbcType=INTEGER},
+      </if>
+      <if test="tType != null" >
+        #{tType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itdr.pojo.Train" >
+    update train
+    <set >
+      <if test="startStation != null" >
+        start_station = #{startStation,jdbcType=VARCHAR},
+      </if>
+      <if test="endStation != null" >
+        end_station = #{endStation,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null" >
+        total_time = #{totalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="totalDistance != null" >
+        total_distance = #{totalDistance,jdbcType=INTEGER},
+      </if>
+      <if test="tType != null" >
+        t_type = #{tType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itdr.pojo.Train" >
+    update train
+    set start_station = #{startStation,jdbcType=VARCHAR},
+      end_station = #{endStation,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      total_time = #{totalTime,jdbcType=VARCHAR},
+      total_distance = #{totalDistance,jdbcType=INTEGER},
+      t_type = #{tType,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
+</mapper>

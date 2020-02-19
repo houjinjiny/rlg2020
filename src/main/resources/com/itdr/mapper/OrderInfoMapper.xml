@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itdr.mapper.OrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.itdr.pojo.OrderInfo" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="VARCHAR" />
+    <result column="order_state" property="orderState" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, id, order_date, order_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderinfo
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderinfo
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itdr.pojo.OrderInfo" >
+    insert into orderinfo (order_id, id, order_date, 
+      order_state)
+    values (#{orderId,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{orderDate,jdbcType=VARCHAR}, 
+      #{orderState,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itdr.pojo.OrderInfo" >
+    insert into orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itdr.pojo.OrderInfo" >
+    update orderinfo
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=BIT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itdr.pojo.OrderInfo" >
+    update orderinfo
+    set id = #{id,jdbcType=VARCHAR},
+      order_date = #{orderDate,jdbcType=VARCHAR},
+      order_state = #{orderState,jdbcType=BIT}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
