@@ -2,39 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itdr.mapper.StationMapper" >
   <resultMap id="BaseResultMap" type="com.itdr.pojo.Station" >
-    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <id column="Id" property="id" jdbcType="INTEGER" />
     <result column="sname" property="sname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sid, sname
+    Id, sname
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from station
-    where sid = #{sid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <!--根据车票的sid查询-->
+    <select id="slectAllByticket" resultType="com.itdr.pojo.Station">
+      select
+      <include refid="Base_Column_List" />
+      from station
+      where Id = #{startId,jdbcType=INTEGER}
+    </select>
+  <!--根据站点名查id-->
+    <select id="selectBySname" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from station
+      where sname = #{startStation}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from station
-    where sid = #{sid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.itdr.pojo.Station" >
-    insert into station (sid, sname)
-    values (#{sid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR})
+    insert into station (Id, sname)
+    values (#{id,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.itdr.pojo.Station" >
     insert into station
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        sid,
+      <if test="id != null" >
+        Id,
       </if>
       <if test="sname != null" >
         sname,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        #{sid,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="sname != null" >
         #{sname,jdbcType=VARCHAR},
@@ -48,11 +62,11 @@
         sname = #{sname,jdbcType=VARCHAR},
       </if>
     </set>
-    where sid = #{sid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.itdr.pojo.Station" >
     update station
     set sname = #{sname,jdbcType=VARCHAR}
-    where sid = #{sid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itdr.mapper.TrainInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.itdr.pojo.TrainInfo" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="cz" property="cz" jdbcType="VARCHAR" />
+    <result column="znums" property="znums" jdbcType="VARCHAR" />
+    <result column="xcnums" property="xcnums" jdbcType="VARCHAR" />
+    <result column="traintype" property="traintype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, tname, cz, znums, xcnums, traintype
+  </sql>
+  <select id="selectHome" resultMap="BaseResultMap">
+      select tf.tname,st.sname,st2.sname,t.start_time,t.end_time,t.ptype,t.price from ticket t
+      left join traininfo tf on t.tid=tf.Id
+      left join station st on t.start_id=st.Id
+      left join station st2 on t.end_id=st2.Id
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from traininfo
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--根据车票tid查询所有-->
+    <select id="selectByTid" resultType="com.itdr.pojo.TrainInfo">
+      select
+      <include refid="Base_Column_List" />
+      from traininfo
+      where Id = #{tid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from traininfo
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itdr.pojo.TrainInfo" >
+    insert into traininfo (Id, tname, cz, 
+      znums, xcnums, traintype
+      )
+    values (#{id,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, #{cz,jdbcType=VARCHAR}, 
+      #{znums,jdbcType=VARCHAR}, #{xcnums,jdbcType=VARCHAR}, #{traintype,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itdr.pojo.TrainInfo" >
+    insert into traininfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="tname != null" >
+        tname,
+      </if>
+      <if test="cz != null" >
+        cz,
+      </if>
+      <if test="znums != null" >
+        znums,
+      </if>
+      <if test="xcnums != null" >
+        xcnums,
+      </if>
+      <if test="traintype != null" >
+        traintype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null" >
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="cz != null" >
+        #{cz,jdbcType=VARCHAR},
+      </if>
+      <if test="znums != null" >
+        #{znums,jdbcType=VARCHAR},
+      </if>
+      <if test="xcnums != null" >
+        #{xcnums,jdbcType=VARCHAR},
+      </if>
+      <if test="traintype != null" >
+        #{traintype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itdr.pojo.TrainInfo" >
+    update traininfo
+    <set >
+      <if test="tname != null" >
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="cz != null" >
+        cz = #{cz,jdbcType=VARCHAR},
+      </if>
+      <if test="znums != null" >
+        znums = #{znums,jdbcType=VARCHAR},
+      </if>
+      <if test="xcnums != null" >
+        xcnums = #{xcnums,jdbcType=VARCHAR},
+      </if>
+      <if test="traintype != null" >
+        traintype = #{traintype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itdr.pojo.TrainInfo" >
+    update traininfo
+    set tname = #{tname,jdbcType=VARCHAR},
+      cz = #{cz,jdbcType=VARCHAR},
+      znums = #{znums,jdbcType=VARCHAR},
+      xcnums = #{xcnums,jdbcType=VARCHAR},
+      traintype = #{traintype,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

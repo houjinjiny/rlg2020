@@ -2,176 +2,165 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itdr.mapper.TicketMapper" >
   <resultMap id="BaseResultMap" type="com.itdr.pojo.Ticket" >
-    <id column="ticket_id" property="ticketId" jdbcType="INTEGER" />
-    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <id column="Id" property="id" jdbcType="INTEGER" />
     <result column="tid" property="tid" jdbcType="VARCHAR" />
-    <result column="cid" property="cid" jdbcType="INTEGER" />
-    <result column="seat_id" property="seatId" jdbcType="INTEGER" />
-    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
-    <result column="customer_ID_card" property="customerIdCard" jdbcType="VARCHAR" />
-    <result column="ticket_start_station" property="ticketStartStation" jdbcType="VARCHAR" />
-    <result column="ticket_end_station" property="ticketEndStation" jdbcType="VARCHAR" />
-    <result column="ticket_start_date" property="ticketStartDate" jdbcType="VARCHAR" />
-    <result column="ticket_price" property="ticketPrice" jdbcType="DECIMAL" />
-    <result column="ticket_state" property="ticketState" jdbcType="VARCHAR" />
+    <result column="start_id" property="startId" jdbcType="INTEGER" />
+    <result column="end_id" property="endId" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="ptype" property="ptype" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="seate_num" property="seateNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ticket_id, order_id, tid, cid, seat_id, customer_name, customer_ID_card, ticket_start_station, 
-    ticket_end_station, ticket_start_date, ticket_price, ticket_state
+    Id, tid, start_id, end_id, start_time, end_time, ptype, price, seate_num
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from ticket
-    where ticket_id = #{ticketId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--查询所有商品（去重）-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ticket
+    GROUP BY tid,start_id,end_id,start_time,end_time,ptype
+    HAVING count(*)>=1
+  </select>
+  <!--重复的数量-->
+  <select id="selectCount"  parameterType="map" resultType="java.lang.Integer">
+    select
+    count(*)
+    from ticket
+    where tid = #{tid,jdbcType=INTEGER} and start_id=#{startId,jdbcType=INTEGER} and end_id=#{endId,jdbcType=INTEGER}
+    and start_time=#{startTime,jdbcType=TIMESTAMP} and end_time=#{endTime,jdbcType=TIMESTAMP}
+    and ptype=#{ptype,jdbcType=VARCHAR}
+  </select>
+  <!--根据起始时间 起始站 终点站 查询车票-->
+  <select id="selectByStartEndStationTime" resultType="com.itdr.pojo.Ticket">
+    select
+    <include refid="Base_Column_List" />
+    from ticket
+    where start_id=#{sid} and end_id=#{eid}
+    and start_time=#{startTime,jdbcType=TIMESTAMP}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ticket
-    where ticket_id = #{ticketId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.itdr.pojo.Ticket" >
-    insert into ticket (ticket_id, order_id, tid, 
-      cid, seat_id, customer_name, 
-      customer_ID_card, ticket_start_station, ticket_end_station, 
-      ticket_start_date, ticket_price, ticket_state
+    insert into ticket (Id, tid, start_id, 
+      end_id, start_time, end_time, 
+      ptype, price, seate_num
       )
-    values (#{ticketId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR}, 
-      #{cid,jdbcType=INTEGER}, #{seatId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, 
-      #{customerIdCard,jdbcType=VARCHAR}, #{ticketStartStation,jdbcType=VARCHAR}, #{ticketEndStation,jdbcType=VARCHAR}, 
-      #{ticketStartDate,jdbcType=VARCHAR}, #{ticketPrice,jdbcType=DECIMAL}, #{ticketState,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{tid,jdbcType=VARCHAR}, #{startId,jdbcType=INTEGER}, 
+      #{endId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{ptype,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{seateNum,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.itdr.pojo.Ticket" >
     insert into ticket
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="ticketId != null" >
-        ticket_id,
-      </if>
-      <if test="orderId != null" >
-        order_id,
+      <if test="id != null" >
+        Id,
       </if>
       <if test="tid != null" >
         tid,
       </if>
-      <if test="cid != null" >
-        cid,
+      <if test="startId != null" >
+        start_id,
       </if>
-      <if test="seatId != null" >
-        seat_id,
+      <if test="endId != null" >
+        end_id,
       </if>
-      <if test="customerName != null" >
-        customer_name,
+      <if test="startTime != null" >
+        start_time,
       </if>
-      <if test="customerIdCard != null" >
-        customer_ID_card,
+      <if test="endTime != null" >
+        end_time,
       </if>
-      <if test="ticketStartStation != null" >
-        ticket_start_station,
+      <if test="ptype != null" >
+        ptype,
       </if>
-      <if test="ticketEndStation != null" >
-        ticket_end_station,
+      <if test="price != null" >
+        price,
       </if>
-      <if test="ticketStartDate != null" >
-        ticket_start_date,
-      </if>
-      <if test="ticketPrice != null" >
-        ticket_price,
-      </if>
-      <if test="ticketState != null" >
-        ticket_state,
+      <if test="seateNum != null" >
+        seate_num,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="ticketId != null" >
-        #{ticketId,jdbcType=INTEGER},
-      </if>
-      <if test="orderId != null" >
-        #{orderId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="tid != null" >
         #{tid,jdbcType=VARCHAR},
       </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=INTEGER},
+      <if test="startId != null" >
+        #{startId,jdbcType=INTEGER},
       </if>
-      <if test="seatId != null" >
-        #{seatId,jdbcType=INTEGER},
+      <if test="endId != null" >
+        #{endId,jdbcType=INTEGER},
       </if>
-      <if test="customerName != null" >
-        #{customerName,jdbcType=VARCHAR},
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="customerIdCard != null" >
-        #{customerIdCard,jdbcType=VARCHAR},
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="ticketStartStation != null" >
-        #{ticketStartStation,jdbcType=VARCHAR},
+      <if test="ptype != null" >
+        #{ptype,jdbcType=VARCHAR},
       </if>
-      <if test="ticketEndStation != null" >
-        #{ticketEndStation,jdbcType=VARCHAR},
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
       </if>
-      <if test="ticketStartDate != null" >
-        #{ticketStartDate,jdbcType=VARCHAR},
-      </if>
-      <if test="ticketPrice != null" >
-        #{ticketPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="ticketState != null" >
-        #{ticketState,jdbcType=VARCHAR},
+      <if test="seateNum != null" >
+        #{seateNum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.itdr.pojo.Ticket" >
     update ticket
     <set >
-      <if test="orderId != null" >
-        order_id = #{orderId,jdbcType=INTEGER},
-      </if>
       <if test="tid != null" >
         tid = #{tid,jdbcType=VARCHAR},
       </if>
-      <if test="cid != null" >
-        cid = #{cid,jdbcType=INTEGER},
+      <if test="startId != null" >
+        start_id = #{startId,jdbcType=INTEGER},
       </if>
-      <if test="seatId != null" >
-        seat_id = #{seatId,jdbcType=INTEGER},
+      <if test="endId != null" >
+        end_id = #{endId,jdbcType=INTEGER},
       </if>
-      <if test="customerName != null" >
-        customer_name = #{customerName,jdbcType=VARCHAR},
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="customerIdCard != null" >
-        customer_ID_card = #{customerIdCard,jdbcType=VARCHAR},
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="ticketStartStation != null" >
-        ticket_start_station = #{ticketStartStation,jdbcType=VARCHAR},
+      <if test="ptype != null" >
+        ptype = #{ptype,jdbcType=VARCHAR},
       </if>
-      <if test="ticketEndStation != null" >
-        ticket_end_station = #{ticketEndStation,jdbcType=VARCHAR},
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
       </if>
-      <if test="ticketStartDate != null" >
-        ticket_start_date = #{ticketStartDate,jdbcType=VARCHAR},
-      </if>
-      <if test="ticketPrice != null" >
-        ticket_price = #{ticketPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="ticketState != null" >
-        ticket_state = #{ticketState,jdbcType=VARCHAR},
+      <if test="seateNum != null" >
+        seate_num = #{seateNum,jdbcType=VARCHAR},
       </if>
     </set>
-    where ticket_id = #{ticketId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.itdr.pojo.Ticket" >
     update ticket
-    set order_id = #{orderId,jdbcType=INTEGER},
-      tid = #{tid,jdbcType=VARCHAR},
-      cid = #{cid,jdbcType=INTEGER},
-      seat_id = #{seatId,jdbcType=INTEGER},
-      customer_name = #{customerName,jdbcType=VARCHAR},
-      customer_ID_card = #{customerIdCard,jdbcType=VARCHAR},
-      ticket_start_station = #{ticketStartStation,jdbcType=VARCHAR},
-      ticket_end_station = #{ticketEndStation,jdbcType=VARCHAR},
-      ticket_start_date = #{ticketStartDate,jdbcType=VARCHAR},
-      ticket_price = #{ticketPrice,jdbcType=DECIMAL},
-      ticket_state = #{ticketState,jdbcType=VARCHAR}
-    where ticket_id = #{ticketId,jdbcType=INTEGER}
+    set tid = #{tid,jdbcType=VARCHAR},
+      start_id = #{startId,jdbcType=INTEGER},
+      end_id = #{endId,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      ptype = #{ptype,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      seate_num = #{seateNum,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

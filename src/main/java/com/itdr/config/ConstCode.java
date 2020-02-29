@@ -3,6 +3,7 @@ package com.itdr.config;
 public class ConstCode {
     public final static int DEFAULT_SUCCESS=200;
     public final static int DEFAULT_FAIL=100;
+    public final static String UNLAWFULNESS_PARAM="非法参数";
     public enum UserEnum {
         //状态信息
         ERROR_PASSWORD(1, "密码错误"),
@@ -59,5 +60,99 @@ public class ConstCode {
             this.desc = desc;
         }
     }
+    public enum ProductEnum {
+        //状态信息
+        UNLAWFULNESS_PARAM(1,"参数不合法"),
+        INEXISTENCE_PRODUCT(2,"商品不存在"),
+        EMPTY_PARAM(3,"参数不能为空"),
+        BEYOND_STOCK(4,"超出库存")
+        ;
 
+        private int code;
+        private String desc;
+
+        private ProductEnum(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+    }
+    public enum CartEnum {
+        //状态信息
+        EMPTY_CART(1,"购物车为空"),
+        FAIL_ADD(2,"添加失败"),
+        FAIL_DELETE(3,"移除失败"),
+        FAIL_CHECKED(4,"选择状态更新失败"),
+        EMPTY_CHECKED(5,"没有被选中的商品")
+        ;
+
+        private int code;
+        private String desc;
+
+        private CartEnum(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+    }
+    public enum OrderEnum {
+        //状态信息
+        EMPTY_ORDER(1,"订单不存在"),
+        FAIL_ORDER(2,"订单不匹配")
+        ;
+
+        private int code;
+        private String desc;
+
+        private OrderEnum(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+    }
 }

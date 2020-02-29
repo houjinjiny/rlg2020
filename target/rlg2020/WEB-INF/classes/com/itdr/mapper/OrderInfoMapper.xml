@@ -2,81 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itdr.mapper.OrderInfoMapper" >
   <resultMap id="BaseResultMap" type="com.itdr.pojo.OrderInfo" >
-    <id column="order_id" property="orderId" jdbcType="INTEGER" />
-    <result column="id" property="id" jdbcType="VARCHAR" />
-    <result column="order_date" property="orderDate" jdbcType="VARCHAR" />
-    <result column="order_state" property="orderState" jdbcType="BIT" />
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="cidcard" property="cidcard" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="lyflag" property="lyflag" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    order_id, id, order_date, order_state
+    Id, cidcard, pid, lyflag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from orderinfo
-    where order_id = #{orderId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from orderinfo
-    where order_id = #{orderId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.itdr.pojo.OrderInfo" >
-    insert into orderinfo (order_id, id, order_date, 
-      order_state)
-    values (#{orderId,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{orderDate,jdbcType=VARCHAR}, 
-      #{orderState,jdbcType=BIT})
+    insert into orderinfo (Id, cidcard, pid, 
+      lyflag)
+    values (#{id,jdbcType=INTEGER}, #{cidcard,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
+      #{lyflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.itdr.pojo.OrderInfo" >
     insert into orderinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        order_id,
-      </if>
       <if test="id != null" >
-        id,
+        Id,
       </if>
-      <if test="orderDate != null" >
-        order_date,
+      <if test="cidcard != null" >
+        cidcard,
       </if>
-      <if test="orderState != null" >
-        order_state,
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="lyflag != null" >
+        lyflag,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        #{orderId,jdbcType=INTEGER},
-      </if>
       <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="orderDate != null" >
-        #{orderDate,jdbcType=VARCHAR},
+      <if test="cidcard != null" >
+        #{cidcard,jdbcType=VARCHAR},
       </if>
-      <if test="orderState != null" >
-        #{orderState,jdbcType=BIT},
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="lyflag != null" >
+        #{lyflag,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.itdr.pojo.OrderInfo" >
     update orderinfo
     <set >
-      <if test="id != null" >
-        id = #{id,jdbcType=VARCHAR},
+      <if test="cidcard != null" >
+        cidcard = #{cidcard,jdbcType=VARCHAR},
       </if>
-      <if test="orderDate != null" >
-        order_date = #{orderDate,jdbcType=VARCHAR},
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
       </if>
-      <if test="orderState != null" >
-        order_state = #{orderState,jdbcType=BIT},
+      <if test="lyflag != null" >
+        lyflag = #{lyflag,jdbcType=VARCHAR},
       </if>
     </set>
-    where order_id = #{orderId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.itdr.pojo.OrderInfo" >
     update orderinfo
-    set id = #{id,jdbcType=VARCHAR},
-      order_date = #{orderDate,jdbcType=VARCHAR},
-      order_state = #{orderState,jdbcType=BIT}
-    where order_id = #{orderId,jdbcType=INTEGER}
+    set cidcard = #{cidcard,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      lyflag = #{lyflag,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

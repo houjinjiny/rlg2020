@@ -53,40 +53,28 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <table schema="" tableName="it_user" domainObjectName="User" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="it_user" domainObjectName="User" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="coach" domainObjectName="Coach" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="neuedu_cart" domainObjectName="Cart" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="fare" domainObjectName="Fare" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="neuedu_category" domainObjectName="Category" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="friend" domainObjectName="Friend" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="neuedu_order" domainObjectName="Order" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="message" domainObjectName="Message" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="neuedu_order_item" domainObjectName="OrderItem" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="orderinfo" domainObjectName="OrderInfo" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="neuedu_payinfo" domainObjectName="PayInfo" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="route" domainObjectName="Route" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <!--<table schema="" tableName="neuedu_shipping" domainObjectName="Product" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
-        <table schema="" tableName="seat" domainObjectName="Seat" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
-
-        <table schema="" tableName="station" domainObjectName="Station" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
-
-        <table schema="" tableName="ticket" domainObjectName="Ticket" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
-
-        <table schema="" tableName="train" domainObjectName="Train" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
-
-        <table schema="" tableName="user_friend" domainObjectName="UserFriend" enableCountByExample="false"
+        <table schema="" tableName="neuedu_shipping" domainObjectName="Shipping" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
 
 
